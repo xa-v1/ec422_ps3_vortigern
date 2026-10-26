@@ -69,5 +69,84 @@ head(can_gas_q)
 
 can_gas_q |> autoplot(Volume)
 
+# We sum the monthly values rather than averaging them because this gives us 
+# the production over the entire quarter, which is more useful for analysis than 
+# the monthly average across the quarter. Yes, the quarterly data still does appear
+# to be seasonal as the production is typically high in Q1, falls off through Q2 and 
+# Q3, and then rises again in Q4. 
+
+
+
+
+
+
+# 2.7: Plotting with Autoplot ----
+retail_ts |>
+  autoplot(sales) +
+  labs(
+    title = "U.S. Retail and Food Services Sales",
+    subtitle = "Seasonally adjusted vs. not seasonally adjusted",
+    x = NULL, y = "Millions of dollars", color = NULL
+  ) +
+  theme_minimal()
+
+# Visually, the season adjustment greatly smooths out the series. Retail sales
+# see a spike every year in November and December due to Christmas, however 
+# this spike is not present in the seasonally adjusted series. Overall they 
+# follow the same trend, and highs/lows are present in both series, arguable 
+# easier to see in the adjusted series. 
+
+can_gas |>
+  autoplot(Volume) +
+  labs(
+    title = "Canadian Monthly Natural Gas Production",
+    x = "Month", y = "Volume (Billions of Cubic Meters)", color = NULL
+  ) +
+  theme_minimal()
+
+retail_ts |>
+  autoplot(sales) +
+  geom_smooth() +
+  labs(
+    title = "U.S. Retail and Food Services Sales",
+    subtitle = "Seasonally adjusted vs. not seasonally adjusted",
+    x = NULL, y = "Millions of dollars", color = NULL
+  ) +
+  theme_minimal()
+
+# I added a trend line with geom_smooth() to see if the recessions caused 
+# noticeable dips in the overall upward trend of the series 
+
+
+
+
+
+
+
+# 3.1-3.2: Log Transformations ----
+
+# The swings get bigger roughly between 1975-1990. Before that they are 
+# relatively constant in size, and constant after as well, although they are 
+# choppier, seemingly meaning that the swings happen faster. 
+
+can_gas <- can_gas |>
+  mutate(log_volume = log(Volume))
+
+can_gas |> autoplot(log_volume)
+
+# After logging, the size differences in the swings are more obvious. They 
+# start out relatively large, get smaller around 1973, then get bigger 
+# between 1975-1990, and shrink considerably after 1990. After logging, the
+# trend also shows much faster growth early on, and then slows down around 
+# 1975. Based on this, I feel like logging is a good option for this series
+# because it makes the trend more clear and the changes in the swing size more
+# obvious. 
+
+retail_ts <- retail_ts |> 
+  filter(series_id == "RSAFSNA") |>
+  mutate(log_sales = log(sales))
+
+
+
 
 
