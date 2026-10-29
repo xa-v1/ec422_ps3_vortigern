@@ -28,6 +28,7 @@ head(retail_ts)
 has_gaps(retail_ts)
 
 
+
 # 2.5: Load Canadian Gas ---- 
 key_vars(canadian_gas)
 index_var(canadian_gas)
@@ -38,8 +39,6 @@ can_gas <- canadian_gas |>
 has_gaps(can_gas)
 
 head(can_gas)
-
-
 
 # 2.6: Edits to Canadian Gas ----
 can_gas_recent <- can_gas |>
@@ -76,12 +75,6 @@ can_gas_q |> autoplot(Volume)
 # the monthly average across the quarter. Yes, the quarterly data still does appear
 # to be seasonal as the production is typically high in Q1, falls off through Q2 and 
 # Q3, and then rises again in Q4. 
-
-
-
-
-
-
 
 # 2.7: Plotting with Autoplot ----
 retail_ts |>
